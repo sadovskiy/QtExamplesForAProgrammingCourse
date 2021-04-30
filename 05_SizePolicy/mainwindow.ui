@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>Sadovskiy B. S.</author>
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>268</width>
+    <height>532</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QGroupBox" name="groupBoxTarget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Target</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QRadioButton" name="radioButtonList1">
+           <property name="text">
+            <string>List 1</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButtonList2">
+           <property name="text">
+            <string>List 2</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayoutStretch">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetFixedSize</enum>
+        </property>
+        <item>
+         <widget class="QLabel" name="labelStretch">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Stretch</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinBox"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QListWidget" name="listWidget1">
+      <item>
+       <property name="text">
+        <string>Item 1</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 2</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 3</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 4</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 5</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 6</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 7</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 8</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 9</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 10</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QListWidget" name="listWidget2">
+      <item>
+       <property name="text">
+        <string>Item 1</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 2</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 3</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 4</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 5</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 6</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 7</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 8</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 9</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Item 10</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>268</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuSizePolicy">
+    <property name="title">
+     <string>Size Policy</string>
+    </property>
+    <addaction name="actionFixed"/>
+    <addaction name="actionMinimum"/>
+    <addaction name="actionMaximum"/>
+    <addaction name="actionPreferred"/>
+    <addaction name="actionMinimumExpanding"/>
+    <addaction name="actionExpanding"/>
+    <addaction name="actionIgnored"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSizePolicy"/>
+  </widget>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionPreferred">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Preferred</string>
+   </property>
+  </action>
+  <action name="actionFixed">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Fixed</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionMinimum">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Minimum</string>
+   </property>
+  </action>
+  <action name="actionMaximum">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Maximum</string>
+   </property>
+  </action>
+  <action name="actionMinimumExpanding">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>MinimumExpanding</string>
+   </property>
+  </action>
+  <action name="actionExpanding">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Expanding</string>
+   </property>
+  </action>
+  <action name="actionIgnored">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Ignored</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
