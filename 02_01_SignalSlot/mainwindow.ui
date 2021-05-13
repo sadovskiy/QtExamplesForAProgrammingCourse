@@ -43,6 +43,9 @@ ProgressBarSecondary</string>
     </item>
     <item row="1" column="2">
      <widget class="QSlider" name="horizontalSlider">
+      <property name="maximum">
+       <number>100</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -65,6 +68,13 @@ ProgressBarSecondary</string>
       </property>
      </widget>
     </item>
+    <item row="3" column="0">
+     <widget class="QSpinBox" name="spinBox">
+      <property name="maximum">
+       <number>100</number>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -73,7 +83,7 @@ ProgressBarSecondary</string>
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>30</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

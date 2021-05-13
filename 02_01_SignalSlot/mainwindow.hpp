@@ -31,12 +31,15 @@ public:
     ~MainWindow();
 
 private slots:
-    // Слот созданный в Qt Designer, через пункт меню "Перейти к слоту..."
+    // Слот, созданный в Qt Designer, через пункт меню "Перейти к слоту..."
     void on_pushButtonSecondary_clicked(bool checked);
-    // Слот созданный нами (вручную)
+    // Слот, созданный нами (вручную)
     void setTextInLabel();
 
-    // Слот созданный в Qt Designer, через пункт меню "Перейти к слоту..."
+    // Слот, созданный нами (вручную) для демонстрации перегрузки сигналов
+    void setValue(const int value);
+
+    // Слот, созданный в Qt Designer, через пункт меню "Перейти к слоту..."
     void on_actionLineEditTextChenged_triggered(bool checked);
 
 private:

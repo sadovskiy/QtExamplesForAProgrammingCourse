@@ -31,6 +31,46 @@ MainWindow::MainWindow(QWidget *parent) :
      * "this" - объект, где располагается слот.
      * "setTextInLabel()" - слот, который предназначен для обработки сигнала.
      */
+
+    // Бываю ситуации, когда сигнал и/или слот могут быть перегружены
+    // и тогда новый синтаксис связи сигнала со слотом может не работать,
+    // выдавая ошибку «unresolved overloaded function type».
+    // Причина кроется в том, что раньше при соединении сигнала со слотом
+    // указывался тип аргумента как сигнала, так и слота,
+    // а при использовании нового синтаксиса передаётся только
+    // имя самого сигнала и/или слота.
+
+    // Пример как выглядела раньше связь (следует обратить внимание на аргументы)
+//    connect(ui->spinBox, SIGNAL(valueChanged(int)),
+//            this,        SLOT(setValue(int)));
+
+    // И в новом синтаксисе (если хотите увидеть ошибку раскомментируйте пример)
+//    connect(ui->spinBox, &QSpinBox::valueChanged,
+//            this,        &MainWindow::setValue);
+
+    // В новом варианте всё работает хорошо пока сигнал и/или слот
+    // не являются перегруженными, как в нашем примере.
+    // Тут сигнал valueChanged() является перегруженным.
+    // Есть вариант сигнала для int и QString.
+    // Решение проблемы существует в двух вариантах
+    // 1. Используя синтаксис C++ до 14 версии
+    connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged),
+            this,        &MainWindow::setValue);
+
+    // 2. Используя синтаксис C++ после 14 версии
+//    connect(ui->spinBox, qOverload<int>(&QSpinBox::valueChanged),
+//            this,        &MainWindow::setValue);
+
+    // Для переключения версии языка C++ откройте файл настройки проекта (.pro)
+    // и там измените параметр CONFIG += c++11
+
+    // Подробнее можно посмотреть по следующим ссылкам:
+    // 1. https://doc.qt.io/qt-5/signalsandslots-syntaxes.html
+    // 2. https://wiki.qt.io/New_Signal_Slot_Syntax
+    // 3. https://stackoverflow.com/questions/16794695/connecting-overloaded-signals-and-slots-in-qt-5
+
+    // Ещё один вариант связи перегруженных сигналов/слотов
+    // с использованием ссылок показан в примере 13_SpinBoxDelegate.
 }
 
 MainWindow::~MainWindow()
@@ -64,6 +104,12 @@ void MainWindow::setTextInLabel()
     // Или более короткий вариант того же самого
     // без использования временной переменной.
     ui->label->setText(ui->lineEdit->text());
+}
+
+// Слот для примера с перегрузкой сигнала QSpinBox::valueChanged()
+void MainWindow::setValue(const int value)
+{
+    ui->progressBarSecondary->setValue(value);
 }
 
 void MainWindow::on_actionLineEditTextChenged_triggered(bool checked)
