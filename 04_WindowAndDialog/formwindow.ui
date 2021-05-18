@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Sadovskiy B. S.</author>
  <class>FormWindow</class>
  <widget class="QWidget" name="FormWindow">
   <property name="geometry">

@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // 3. https://stackoverflow.com/questions/16794695/connecting-overloaded-signals-and-slots-in-qt-5
 
     // Ещё один вариант связи перегруженных сигналов/слотов
-    // с использованием ссылок показан в примере 13_SpinBoxDelegate.
+    // с использованием ссылок показан в примере 11_Delegate.
 }
 
 MainWindow::~MainWindow()
