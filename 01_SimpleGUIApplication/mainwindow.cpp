@@ -17,7 +17,7 @@
 
 /*
  * Файл, содержащий описание формы на языке C++
- * после прохождения файла "mainwindow.ui" мета-объектным компилятором Qt.
+ * после прохождения файла "mainwindow.ui" мета-объектным компилятором Qt
  */
 #include "ui_mainwindow.h"
 
@@ -27,7 +27,7 @@
  * Это необходимо только для динамических объектов, создаваемых программно.
  * Для объектов, созданных на форме  (файл "mainwindow.ui") этого не требуется,
  * так как в этом случае
- * это сделает MOC (англ. Meta-Object Compiler - мета-объектный компилятор).
+ * это сделает MOC (англ. Meta-Object Compiler - мета-объектный компилятор)
  */
 #include <QPushButton>
 #include <QLabel>
@@ -36,16 +36,16 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , pushButton(nullptr) // Здесь обнуляем указатели, а память выделим под него ниже,
-  , label(nullptr)       // хотя ничего не мешает нам это сделать и тут.
+  , label(nullptr)       // хотя ничего не мешает нам это сделать и тут
 {
     /*
-     * Метод создаёт компоненты формы по описанию из файла "mainwindow.ui".
+     * Метод создаёт компоненты формы по описанию из файла "mainwindow.ui"
      */
     ui->setupUi(this);
 
     /*
      * Создаём кнопку и метку в динамической памяти и
-     * сразу делаем на них надпись.
+     * сразу делаем на них надпись
      */
     pushButton = new QPushButton(tr("DynamicPushButton"));
     label = new QLabel(tr("DynamicLabel"));
@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /*
      * Делаем привязку сигнала "clicked()" нажатия по кнопке к
      * слоту "pushButtonClicked()", который обрабатывает вывод
-     * строки "Hello world!" в метку "label".
+     * строки "Hello world!" в метку "label"
      */
     connect(pushButton, &QPushButton::clicked,
             this, &MainWindow::pushButtonClicked);
@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
      * Задаём правила изменения размера для метки (по горизонтали и вертикали)
      * "Expanding" - занять максимум доступного пространства
      * "Preferred" - занимать стандартное пространство,
-     * рекомендуемое для этого типа объекта.
+     * рекомендуемое для этого типа объекта
      */
     label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
@@ -80,14 +80,14 @@ MainWindow::MainWindow(QWidget *parent) :
      * "1" - во второй строке (отсчёт строк идёт от нуля)
      * "QFormLayout::LabelRole" - в первом столбце
      * "QFormLayout::FieldRole" - во втором столбце
-     * Последним аргументом передаём, что собственно размещать.
+     * Последним аргументом передаём, что собственно размещать
      */
     //    ui->formLayout->setWidget(1, QFormLayout::LabelRole, label);
     //    ui->formLayout->setWidget(1, QFormLayout::FieldRole, pushButton);
 
     /*
      * Эти параметры работают, только если включена компоновка
-     * по сетке "gridLayout".
+     * по сетке "gridLayout"
      */
     ui->gridLayout->addWidget(label);
     ui->gridLayout->addWidget(pushButton);
@@ -96,7 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
      * вариант компоновки главного окна и раскомментированы
      * соответствующие строки.
      * Например как сейчас включён "gridLayout" и расскоментированы строки
-     * относящиеся к ниму.
+     * относящиеся к ниму
      */
 }
 
@@ -104,23 +104,23 @@ MainWindow::~MainWindow()
 {
     delete label;
     delete pushButton;
-    delete ui; // Удаляем созданный по форме (файл mainwindow.ui) компонент.
+    delete ui; // Удаляем созданный по форме (файл mainwindow.ui) компонент
 }
 
-// Слот созданный в Qt Designer, через пункт меню "Перейти к слоту...".
+// Слот созданный в Qt Designer, через пункт меню "Перейти к слоту..."
 void MainWindow::on_pushButton_clicked()
 {
     /*
      * Выводим строку "Hello world!" в метку,
      * созданную на форме (файл "mainwindow.ui")
-     * через дизайнер Qt Creator.
+     * через дизайнер Qt Creator
      */
     ui->label->setText(tr("Hello world!"));
 }
 
-// Слот созданый нами (вручную) прописыванием в секции "private slots".
+// Слот созданый нами (вручную) прописыванием в секции "private slots"
 void MainWindow::pushButtonClicked()
 {
-    // Выводим строку "Hello world!" в метку, созданную в динамической памяти.
+    // Выводим строку "Hello world!" в метку, созданную в динамической памяти
     label->setText(tr("hello world!"));
 }

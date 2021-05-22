@@ -13,14 +13,14 @@
 # убрать из имеющихся - "-=";
 # добавить, но только если параметр ещё не был определён - "*=".
 # Значения ставятся в зависимости от параметра, например:
-# TEMPLATE = app или DESTDIR = ../lib.
+# TEMPLATE = app или DESTDIR = ../lib
 
 # Подключаем модули:
 # 1) ядро Qt "core";
 # 2) графический интерфейс пользователя "gui".
 QT += core gui
 
-# Если версия Qt старше 4-ой, то подключать новый (qt5) модуль "widgets".
+# Если версия Qt старше 4-ой, то подключать новый (qt5) модуль "widgets"
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # Имя создаваемого исполняемого файла после компиляции.
@@ -36,13 +36,13 @@ TARGET = SimpleGUIApplication
 TEMPLATE = app
 
 # Можно добавить текущую версию программы.
-# Она потом будет отображаться в свойствах.
+# Она потом будет отображаться в свойствах
 VERSION = 1.0
 
 # Добавления флагов компилятору Си++, например pedantic
 # Подробнее в справке по соответствующему компилятору.
 # Например для GCC можно посмотреть тут:
-# https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html.
+# https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html
 QMAKE_CXXFLAGS += -pedantic
 
 # Если нужно изменить оптимизацию GCC предлагаемую по умолчанию
@@ -54,14 +54,14 @@ QMAKE_CXXFLAGS_RELEASE += -O0 # Включаем свою
 # Для управления флагами связывания проекта
 #QMAKE_LFLAGS += -Wl,-O2
 
-# Внутреннее имя программы (только в Windows).
+# Внутреннее имя программы (только в Windows)
 QMAKE_TARGET_PRODUCT = Example application
-# Компания разработчик приложения (только в Windows).
+# Компания разработчик приложения (только в Windows)
 QMAKE_TARGET_COMPANY = Private Person, Sadovskiy Boris
-# Авторство и лицензия (только в Windows).
+# Авторство и лицензия (только в Windows)
 QMAKE_TARGET_COPYRIGHT = Sadovskiy Boris S., GPL
 
-# Выдавать предупреждения компилятора для устаревших функций Qt.
+# Выдавать предупреждения компилятора для устаревших функций Qt
 DEFINES += QT_DEPRECATED_WARNINGS
 
 # Если есть желание, чтобы программа вообще не компилировалась
@@ -75,23 +75,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # Но на случай проблем с кодировками может пригодиться.
 CODECFORSRC = UTF-8
 
-# Поддержка стандарта Си++11.
+# Поддержка стандарта Си++11
 CONFIG += c++11
 
-# Список файлов исходного кода входящих в проект.
+# Список файлов исходного кода входящих в проект
 SOURCES += main.cpp \
            mainwindow.cpp
 
-# Заголовочные файлы.
+# Заголовочные файлы
 HEADERS += mainwindow.hpp
 
-# Файлы форм (на языке XML) окон приложения.
+# Файлы форм (на языке XML) окон приложения
 FORMS += mainwindow.ui
 
 # Правила по умолчанию для развёртывания проекта на других платформах,
 # например: qnx или android.
 # Нам не понадобятся но и не мешают.
-# С новой версии Qt Creator генерируются сами.
+# С новой версии Qt Creator генерируются сами
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
