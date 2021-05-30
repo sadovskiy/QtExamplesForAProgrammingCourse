@@ -32,10 +32,12 @@ MainWindow::MainWindow(QWidget *parent) :
      * В свою очередь слот "setValue(int)" создан в этом же классе
      * и по этому для него используем указатель "this".
      */
-    //    connect(myTimer, SIGNAL(step(int)), this, SLOT(setValue(int)));
-    //    connect(myTimer, &Timer::step, this, &MainWindow::setValue);
-    // или
-    connect(myTimer, &Timer::step, ui->progressBar, &QProgressBar::setValue);
+    // Старый вариант
+//    connect(myTimer, SIGNAL(step(int)), this, SLOT(setValue(int)));
+    // Новый вариант
+//    connect(myTimer, &Timer::step, this, &MainWindow::setValue);
+    // или напрямую в progressBar без вызова мтода-слота (также в новом синтаксисе)
+     connect(myTimer, &Timer::step, ui->progressBar, &QProgressBar::setValue);
 }
 
 MainWindow::~MainWindow()

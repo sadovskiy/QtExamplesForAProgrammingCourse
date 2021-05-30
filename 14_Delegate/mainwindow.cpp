@@ -21,6 +21,7 @@
 #include "ui_mainwindow.h"
 #include "spinboxdelegate.hpp"
 #include "checkboxdelegate.hpp"
+#include "comboboxdelegate.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -52,16 +53,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Создать делегат (форма обработки данных)
     // по обработке ввода данных в ячейку, использующий QSpinBox
-    SpinBoxDelegate *delegate = new SpinBoxDelegate(this);
+    SpinBoxDelegate *spDelegate = new SpinBoxDelegate(this);
 
     // Установить для первого столбца в качестве ячейки ввода
     // нашу ячейку delegate с элементом ввода QSpinBox
-    ui->tableWidget->setItemDelegateForColumn(0, delegate);
+    ui->tableWidget->setItemDelegateForColumn(0, spDelegate);
 
     // Два оператора выше можно записать в один оператор
 //    ui->tableWidget->setItemDelegateForColumn(0, new SpinBoxDelegate(this));
 
-    // То же самое для элемента QCheckBox
+    // То же самое для элемента QCheckBox и сразу запишем в один оператор
     ui->tableWidget->setItemDelegateForColumn(1, new CheckBoxDelegate(this));
 
     // После добавления можно выровнять толщину столбцов
@@ -73,6 +74,12 @@ MainWindow::MainWindow(QWidget *parent) :
     // Если хотите, что бы его не было, то можно растянуть последний
     // столбец до конца таблицы
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+
+    ComboBoxDelegate *cbDelegate = new ComboBoxDelegate(this);
+
+    cbDelegate->setData(QStringList({ "Hello", "my", "world!" }));
+
+    ui->tableWidget->setItemDelegateForColumn(2, cbDelegate);
 }
 
 MainWindow::~MainWindow()

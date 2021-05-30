@@ -67,7 +67,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Подробнее можно посмотреть по следующим ссылкам:
     // 1. https://doc.qt.io/qt-5/signalsandslots-syntaxes.html
     // 2. https://wiki.qt.io/New_Signal_Slot_Syntax
-    // 3. https://stackoverflow.com/questions/16794695/connecting-overloaded-signals-and-slots-in-qt-5
+    // 3. https://wiki.qt.io/New_Signal_Slot_Syntax/ru
+    // 4. https://stackoverflow.com/questions/16794695/connecting-overloaded-signals-and-slots-in-qt-5
 
     // Ещё один вариант связи перегруженных сигналов/слотов
     // с использованием ссылок показан в примере 11_Delegate.

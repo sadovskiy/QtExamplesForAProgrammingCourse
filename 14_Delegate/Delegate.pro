@@ -10,11 +10,13 @@ CONFIG += c++14
 #https://doc.qt.io/qt-5.15/modelview.html
 
 SOURCES += main.cpp\
+    comboboxdelegate.cpp \
         mainwindow.cpp \
     spinboxdelegate.cpp \
     checkboxdelegate.cpp
 
 HEADERS  += mainwindow.hpp \
+    comboboxdelegate.hpp \
     spinboxdelegate.hpp \
     checkboxdelegate.hpp
 
