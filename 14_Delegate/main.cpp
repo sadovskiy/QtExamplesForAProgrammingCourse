@@ -13,6 +13,10 @@
  *
  */
 
+// Подробно работа с делегатами (Контроллерами) описана в документации,
+// например тут: https://doc.qt.io/qt-5/modelview.html
+// раздел 3.4 Delegates.
+
 #include "mainwindow.hpp"
 
 #include <QApplication>

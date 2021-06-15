@@ -22,6 +22,7 @@
 #include <QCheckBox>
 #include <QApplication>
 #include <QPainter>
+#include <QMouseEvent>
 
 // Методы этого класса работают аналогично методам
 // класса SpinBoxDelegate. Всё основное описание находится там.
@@ -192,8 +193,8 @@ void CheckBoxDelegate::paint(QPainter *painter,
         // Если это возможно и значение является истинным (true),
         // то рисуем флажок, через побитовое "ИЛИ" с присвоением
         newEditorOption.state |= QStyle::State_On;
-        // Аналогично оператору ↑ полностью можно написать так
-        // newEditorOption.state =  .state | QStyle::State_On;
+    // Аналогично оператору ↑ полностью можно написать так
+    // newEditorOption.state =  .state | QStyle::State_On;
 
     else
         // Если это возможно, но значение является ложным (false),
@@ -226,8 +227,10 @@ bool CheckBoxDelegate::editorEvent(QEvent *event,
     // по такому событию, как отпускание после нажатия указателем мыши
     if (event->type() == QEvent::MouseButtonRelease)
     {
-        // Смена состояния флажка QCheckBox
-        model->setData(index, !index.data().toBool());
+        // Сделаем проверку для реакции только на нажатие по левой кнопки мыши
+        if (static_cast<QMouseEvent *>(event)->button() == Qt::LeftButton)
+            // Смена состояния флажка QCheckBox
+            model->setData(index, !index.data().toBool());
 
         // Сообщаем внешнему вызвавшему этот метод оператору,
         // что инструкция завершилась успешно

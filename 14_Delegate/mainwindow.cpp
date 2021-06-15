@@ -75,10 +75,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // столбец до конца таблицы
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 
+    // Пример делегата с элементом QComboBox
     ComboBoxDelegate *cbDelegate = new ComboBoxDelegate(this);
 
+    // Задаём список вариантов для выбора их пользователем в выпадающем списке
     cbDelegate->setData(QStringList({ "Hello", "my", "world!" }));
 
+    // Устанавливаем для третьего столбца делегат с выпадающим списком
     ui->tableWidget->setItemDelegateForColumn(2, cbDelegate);
 }
 
