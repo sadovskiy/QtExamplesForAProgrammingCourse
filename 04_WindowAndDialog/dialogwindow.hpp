@@ -35,6 +35,11 @@ public:
     void setString(const QString& str) {mStr = str;}
     QString string() const {return mStr;}
 
+    // Или без промежуточной переменной mStr и реализация методов в файле cpp
+    void setData(const QString& str);
+    QString data() const;
+
+
 private slots:
     void on_lineEdit_textChanged(const QString &arg1);
 

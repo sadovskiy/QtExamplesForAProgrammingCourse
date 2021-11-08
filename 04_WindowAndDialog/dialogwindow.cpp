@@ -28,6 +28,16 @@ DialogWindow::~DialogWindow()
     delete ui;
 }
 
+void DialogWindow::setData(const QString &str)
+{
+    ui->lineEdit->setText(str);
+}
+
+QString DialogWindow::data() const
+{
+    return ui->lineEdit->text();
+}
+
 void DialogWindow::on_lineEdit_textChanged(const QString &arg1)
 {
     if (!arg1.isEmpty()) {
