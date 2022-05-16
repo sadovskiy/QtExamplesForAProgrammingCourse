@@ -37,7 +37,7 @@ private slots:
 
     void on_pushButtonFormWindowA_clicked();
 
-    void setStatusBarMessage(FormWindow::UserData ud);
+    void setStatusBarMessage(const FormWindow::UserData ud);
 
     void on_buttonNewWindowD_clicked();
 

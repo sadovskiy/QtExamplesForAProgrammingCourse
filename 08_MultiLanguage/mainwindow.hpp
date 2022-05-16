@@ -25,6 +25,7 @@ class MainWindow;
 
 /// Делаем предварительное(опережающее, упреждающее) объявление
 class QActionGroup;
+class QLabel;
 
 class MainWindow : public QMainWindow
 {
@@ -54,6 +55,7 @@ private:
 
     /// Список доступных переводов в меню будет формироваться динамически
     QActionGroup *languageActionGroup;
+    QLabel *label;
     /// Переменная где будет храниться путь к файлам перевода "*.qm"
     QString qmPath;
 

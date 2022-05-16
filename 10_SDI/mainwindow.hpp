@@ -50,8 +50,8 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    QString currentFileName; /// Имя открытого файла
-    bool isUntitled;         /// Файл без названия
+    QString currentFileName; // Имя открытого файла
+    bool isUntitled;         // Файл без названия
 
     void setCurrentFile(const QString& fileName);
     QString strippedName(const QString& fullFileName);

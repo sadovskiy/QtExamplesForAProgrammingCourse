@@ -73,8 +73,11 @@ void MainWindow::readSettings()
 //    }
     // либо (что более компактно) просто передать целое,
     // которое соответствует константе enum с приведением типа к Qt::CheckState
-    ui->checkBox->setCheckState((Qt::CheckState)settings.value("CheckState",
-                                                               Qt::Unchecked).toInt());
+//    ui->checkBox->setCheckState((Qt::CheckState)settings.value("CheckState",
+//                                                               Qt::Unchecked).toInt());
+    // или ещё вариант с привидением типа в стиле Си++
+    ui->checkBox->setCheckState(static_cast<Qt::CheckState>(settings.value("CheckState",
+                                                               Qt::Unchecked).toInt()));
     settings.endGroup();
 }
 

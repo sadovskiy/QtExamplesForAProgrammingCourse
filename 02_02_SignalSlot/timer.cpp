@@ -37,16 +37,16 @@ Timer::~Timer()
 
 }
 
-void Timer::start(int count, int ms)
+void Timer::start(const int count, const int delay)
 {
     int i = 0;
 
     // Цикл работает пока не достигнет заданного значения "count".
     while (i <= count) {
         #ifdef _WIN64
-        Sleep(ms); // Функция задержки в ОС Windows.
+        Sleep(delay); // Функция задержки в ОС Windows.
         #else
-        usleep(ms); // Функция задержки в ОС GNU/Linux.
+        usleep(delay); // Функция задержки в ОС GNU/Linux.
         #endif
         // Тут происходит испускание сигнала
         // со значением текущего шага в цикле.

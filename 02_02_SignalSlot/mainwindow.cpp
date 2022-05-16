@@ -46,7 +46,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setValue(int value)
+void MainWindow::setValue(const int value)
 {
     // Задаём новое значение на визуальный компонент "progressBar".
     ui->progressBar->setValue(value);

@@ -143,15 +143,16 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
 // а в переменную time записываем текущее время
 bool TableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    // Проверим на корректность index
+    if (!index.isValid())
+        return false;
+
     // Определяем текущий столбец
     int col = index.column();
 
     // Определяем текущую роль. Тут почти всегда будет EditRole.
     // Другие роли будут если поменяется поле ввода с текстовой на CheckBox
     if (role == Qt::EditRole) {
-        // Проверим на корректность index
-        if (!index.isValid())
-            return false;
         // Если всё хорошо, то определяем какому столбцу относится
         // текущая ячейка и делаем вставку данных в соответствующий
         // контейнер

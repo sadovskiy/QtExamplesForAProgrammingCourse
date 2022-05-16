@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                        0, // Минимальное значение индикатора.
                                        100, // Максимальное значение.
                                        this)) // Родителем для диалогового
-  // окна будет главное окно.
+                                            // окна будет главное окно.
   , timer(new QTimer(this))
   , steps(0) // Начальное значение шага индикатора прогресса.
 {
@@ -89,6 +89,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete timer;
+    delete progressDialog;
+    delete printer;
+    delete textDoc;
+    delete errorMessageDialog;
     delete ui;
 }
 
@@ -328,7 +333,7 @@ void MainWindow::on_pushButtonMBoxWarning_clicked()
     QMessageBox msgBox(QMessageBox::Warning,
                        tr("QMessageBox::warning()"),
                        tr("This warning message!"),
-                       0, // Не будет кнопок при создании окна.
+                       QMessageBox::NoButton, // Не будет кнопок при создании окна.
                        this);
 
     // Если нужно, что-то объяснить пользователю подробнее.

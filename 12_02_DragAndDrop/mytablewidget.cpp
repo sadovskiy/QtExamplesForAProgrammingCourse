@@ -49,26 +49,24 @@ MyTableWidget::MyTableWidget(QWidget *parent):
   // Это внутренний бинарный MIME тип используемый только в библиотеке Qt
   // для ячеек таблицы
   , currentMimeType("application/x-qabstractitemmodeldatalist")
+  // Проинициализируем переменные соответствующими кодами
   , cr('\r')
   , lf('\n')
   , tab('\t')
   , comma(',')
   , semicolon(';')
   , quotes('\"')
-  , columnDelimiter{',', ';', '\t'}
-  , rowDelimiter{0x0d0a, 0x000a, 0x000d} // 0d0a (crlf)
+  , columnDelimiter{comma, semicolon, tab}
   , currentColumnDelimiter(columnDelimiter[0])
-  , currentRowDelimiter{0, '\n'}
-  //  , currentRowDelimiter(QString("%1%2").arg(cr).arg(lf))
-  //  , currentRowDelimiter({cr, lf})
+  , rowDelimiter{lf, lf, cr}
+  , addCurrentRowDelimiter{cr}
+  , currentRowDelimiter{rowDelimiter[0]}
   , thereAreQuotes(true)
 {
-    //    currentRowDelimiter = {cr, lf};
-    qDebug() << currentColumnDelimiter << " " << currentRowDelimiter;
 }
 
 // Этот метод запускается, если пользователь пытается
-// перетащить ячейку (ячейки) таблицы мышью.
+// перетащить ячейку (ячейки) таблицы мышью. Можно назвать из исходящими.
 // Аргументы itmes содержит список QList перетаскиваемых ячеек.
 // В случае работы с моделью, есть аналогичный метод класса QAbstractItemModel
 // описанный в документации Qt.
@@ -128,7 +126,9 @@ QMimeData *MyTableWidget::mimeData(const QList<QTableWidgetItem *> items) const
     //        columnCount = selectedRanges().at(i).columnCount();
     //    }
 
-    // Так как под разные типы данных MIME используются разные способы подготовки к передаче данных
+    // Так как под разные типы данных MIME используются разные способы
+    // подготовки к передаче данных, то сделаем проверку на тип
+    // и в зависимости от входящих значений, будет разный разбор
     if (hasFormat("text/plain") || hasFormat("text/csv") ) {
         QString result;
 
@@ -162,12 +162,15 @@ QMimeData *MyTableWidget::mimeData(const QList<QTableWidgetItem *> items) const
                     (c < columnCountSelectionRange ||
                      items.at(i)->row() == topSelectionRange))
                 result += currentColumnDelimiter;
-            if (r > 0 && items.at(i)->column() == leftSelectionRange)
-                result += currentRowDelimiter[1];
+            if (r > 0 && items.at(i)->column() == leftSelectionRange) {
+                if (addCurrentRowDelimiter)
+                    result += addCurrentRowDelimiter;
+                result += currentRowDelimiter;
+            }
             if (thereAreQuotes)
                 result += quotes +
-                          items.at(i)->data(Qt::DisplayRole).toString() +
-                          quotes;
+                        items.at(i)->data(Qt::DisplayRole).toString() +
+                        quotes;
             else
                 result += items.at(i)->data(Qt::DisplayRole).toString();
 
@@ -177,7 +180,9 @@ QMimeData *MyTableWidget::mimeData(const QList<QTableWidgetItem *> items) const
                 rowCountSelectionRange++;
         }
 
-        result += currentRowDelimiter[1];
+        if (addCurrentRowDelimiter)
+            result += addCurrentRowDelimiter;
+        result += currentRowDelimiter;
         qDebug() << result;
         // Создаём объект формата MIME в который далее сложим обработанные данные.
         // Именно этот объект передаётся другим объектам
@@ -188,17 +193,9 @@ QMimeData *MyTableWidget::mimeData(const QList<QTableWidgetItem *> items) const
         return mimeData;
     }
 
-    if (hasFormat("application/x-qabstractitemmodeldatalist")) {
-        //        QDataStream stream(&codedData, QIODevice::WriteOnly);
-        //        QMap<int,  QVariant> roleDataMap;
-
-        //        for (int i = 0; i < items.count(); ++i) {
-        //            roleDataMap[Qt::DisplayRole] = items.at(i)->data(Qt::DisplayRole);
-        //            stream << items.at(i)->row() << items.at(i)->column() << roleDataMap;
-        //        }
-
+    if (hasFormat("application/x-qabstractitemmodeldatalist"))
         return QTableWidget::mimeData(items);
-    }
+
     return nullptr;
 }
 
@@ -215,6 +212,11 @@ QStringList MyTableWidget::mimeTypes() const
     return types;
 }
 
+// Этот метод запускается, если пользователь перетащил данные мышью и
+// отпустил над ячейкой таблицы. Можно назвать из входящими.
+// Аргументы row и column содержат, координаты ячейки на которую выполнен
+// перенос данных. Указатель data содержит данные, которые были перенесены.
+// Аргумент action содержит
 bool MyTableWidget::dropMimeData(int row, int column,
                                  const QMimeData *data,
                                  Qt::DropAction action)
@@ -228,15 +230,21 @@ bool MyTableWidget::dropMimeData(int row, int column,
     }
 
     if (data->hasFormat("text/plain")) {
-        QStringList strings = data->text().split(lf);
+        QStringList strings;
+        if (addCurrentRowDelimiter) {
+            strings = data->text().split(QString("%1%2").arg(addCurrentRowDelimiter).arg(currentRowDelimiter));
+        }
+        else
+            strings = data->text().split(currentRowDelimiter);
 
         for (int rowSelected = 0; rowSelected < strings.count(); ++rowSelected) {
             if ((row + rowSelected) >= rowCount())
                 insertRow(rowCount());
-            QStringList tokens = strings[rowSelected].split(semicolon);
+            QStringList tokens = strings[rowSelected].split(currentColumnDelimiter);
             for (int columnSelected = 0; columnSelected < tokens.count(); ++columnSelected) {
                 QString token = tokens[columnSelected];
-                token.remove(thereAreQuotes);
+                if (thereAreQuotes)
+                    token.remove(quotes);
                 if (token.isEmpty())
                     continue;
                 QTableWidgetItem *item = new QTableWidgetItem;
@@ -251,6 +259,7 @@ bool MyTableWidget::dropMimeData(int row, int column,
     return false;
 }
 
+// Метод setMimeType() предназначен для смены текущего типа исходящих данных
 void MyTableWidget::setMimeType(const QString &newMimeType)
 {
     if (newMimeType == "text/plain" ||
@@ -262,19 +271,26 @@ void MyTableWidget::setMimeType(const QString &newMimeType)
     currentMimeType = newMimeType;
 }
 
+// Метод setRowDelimiter() предназначен для смены
+// текущего разделителя строк (cr или lf или crlf)
 void MyTableWidget::setRowDelimiter(int newDelimiter)
 {
-//    currentRowDelimiter[0] = rowDelimiter[newDelimiter];
-//    currentRowDelimiter[0] = 0x00;
-    qDebug() << currentRowDelimiter;
+    if (newDelimiter == 0)
+        addCurrentRowDelimiter = cr;
+    else
+        addCurrentRowDelimiter = '\0';
+    currentRowDelimiter = rowDelimiter[newDelimiter];
 }
 
+// Метод setColumnDelimiter() предназначен для смены
+// текущего разделителя столбцов (запятая или точка с запятой или табуляция)
 void MyTableWidget::setColumnDelimiter(int newDelimiter)
 {
     currentColumnDelimiter = columnDelimiter[newDelimiter];
-    qDebug() << currentColumnDelimiter;
 }
 
+// Метод setQuotes() позволяет задать
+// стоит ли обрамлять строки кавычками или нет
 void MyTableWidget::setQuotes(bool state)
 {
     thereAreQuotes = state;

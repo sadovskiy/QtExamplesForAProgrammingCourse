@@ -46,10 +46,39 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(sizePolicyActionGroup, &QActionGroup::triggered,
             this, &MainWindow::setSizePolicy);
+
+    switch (ui->listWidget1->sizePolicy().verticalPolicy()) {
+    case QSizePolicy::Fixed:
+        ui->actionFixed->setChecked(true);
+        break;
+    case QSizePolicy::Minimum:
+        ui->actionMinimum->setChecked(true);
+        break;
+    case QSizePolicy::Maximum:
+        ui->actionMaximum->setChecked(true);
+        break;
+    case QSizePolicy::Preferred:
+        ui->actionPreferred->setChecked(true);
+        break;
+    case QSizePolicy::MinimumExpanding:
+        ui->actionMinimumExpanding->setChecked(true);
+        break;
+    case QSizePolicy::Expanding:
+        ui->actionExpanding->setChecked(true);
+        break;
+    case QSizePolicy::Ignored:
+        ui->actionIgnored->setChecked(true);
+        break;
+    }
+    //  или
+//    if (ui->listWidget1->sizePolicy().verticalPolicy() ==
+//            QSizePolicy::Fixed)
+//        ui->actionFixed->setChecked(true);
 }
 
 MainWindow::~MainWindow()
 {
+    delete sizePolicyActionGroup;
     delete ui;
 }
 
@@ -103,6 +132,9 @@ void MainWindow::setSizePolicy(QAction *action)
             ui->listWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
             break;
         }
+    //  или
+//    ui->listWidget1->setSizePolicy(QSizePolicy::Fixed,
+//                                   (QSizePolicy::Policy)action->data().toInt());
 }
 
 void MainWindow::on_radioButtonList1_clicked(bool checked)
@@ -131,7 +163,7 @@ void MainWindow::on_radioButtonList1_clicked(bool checked)
             ui->actionIgnored->setChecked(true);
             break;
         }
-        ui->spinBox->setValue(ui->verticalLayout_3->stretch(1));
+        ui->spinBox->setValue(ui->verticalLayoutMainWindow->stretch(1));
     }
 }
 
@@ -161,15 +193,15 @@ void MainWindow::on_radioButtonList2_clicked(bool checked)
             ui->actionIgnored->setChecked(true);
             break;
         }
-        ui->spinBox->setValue(ui->verticalLayout_3->stretch(2));
+        ui->spinBox->setValue(ui->verticalLayoutMainWindow->stretch(2));
     }
 }
 
 void MainWindow::on_spinBox_valueChanged(int arg1)
 {
     if (ui->radioButtonList1->isChecked())
-        ui->verticalLayout_3->setStretch(1, arg1);
+        ui->verticalLayoutMainWindow->setStretch(1, arg1);
 
     if (ui->radioButtonList2->isChecked())
-        ui->verticalLayout_3->setStretch(2, arg1);
+        ui->verticalLayoutMainWindow->setStretch(2, arg1);
 }

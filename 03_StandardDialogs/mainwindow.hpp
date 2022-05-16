@@ -23,8 +23,8 @@ class MainWindow;
 }
 
 /*
- * Тут объявляем классы, чтобы не подключать бибиотеки через "#include"
- * потому, что нам в объявлении указателя весь класс не нужен.
+ * Тут объявляем классы, чтобы не подключать библиотеки через "#include"
+ * потому, что нам для объявления указателя весь класс не нужен.
  */
 class QErrorMessage;
 class QPrinter;
@@ -40,6 +40,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    // Далее перечислены слоты кнопок, вызывающие соответствующие диалоговые окна
 private slots:
     void on_pushButtonGetInt_clicked();
 
@@ -81,7 +82,7 @@ private slots:
 
     void on_pushButtonPrintPreview_clicked();
 
-    void printPreviewNeeds(QPrinter* m_printer);
+    void printPreviewNeeds(QPrinter *m_printer);
 
     void on_pushButtonProgress_clicked();
 

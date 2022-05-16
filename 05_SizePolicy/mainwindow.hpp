@@ -36,9 +36,7 @@ private slots:
     void setSizePolicy(QAction *action);
 
     void on_radioButtonList1_clicked(bool checked);
-
     void on_radioButtonList2_clicked(bool checked);
-
     void on_spinBox_valueChanged(int arg1);
 
 private:

@@ -41,20 +41,29 @@ class MyTableWidget : public QTableWidget
     QString currentMimeType;
 
     // Определим несколько символов для разметки
-    const char cr;        // Возврат каретки (англ. Carriage Return)
-    const char lf;        // Перевод на строку (англ. Line Feed)
-    const char tab;       // Табуляция
-    const char comma;     // Запятая
-    const char semicolon; // Точка с запятой
-    const char quotes;    // Кавычки
+    const char cr;        // Возврат каретки (англ. Carriage Return) (Байт: 0x0d)
+    const char lf;        // Перевод на строку (англ. Line Feed) (Байт: 0x0a)
+    const char tab;       // Табуляция (Байт: 0x09)
+    const char comma;     // Запятая (Байт: 0x2C)
+    const char semicolon; // Точка с запятой (Байт: 0x3B)
+    const char quotes;    // Кавычки (Байт: 0x22)
 
+    // Возможные варианты разделителя столбцов
     char columnDelimiter[3];
-    short rowDelimiter[3];
-    short currentColumnDelimiter;
-    char currentRowDelimiter[2];
+    // Текущий разделитель столбцов
+    char currentColumnDelimiter;
+    // Основные возможные варианты разделителя строк
+    char rowDelimiter[3];
+    // Текущий основной разделитель строк
+    char addCurrentRowDelimiter;
+    // Дополнительный символ для переноса из двух символов
+    char currentRowDelimiter;
+    // Использовать ли кавычки для обрамления данных в ячейке
     bool thereAreQuotes;
 
+    // Определим текущий формат данных MIME
     bool hasFormat(const QString &format) const;
+
 public:
     MyTableWidget(QWidget *parent = nullptr);
 
@@ -74,11 +83,14 @@ protected:
 
 public slots: // Вызов этого метода задаёт использование типа MIME
     void setMimeType(const QString &newMimeType);
+    // Устанавливает текущий разделитель для строк
     void setRowDelimiter(int newDelimiter);
+    // Устанавливает текущий разделитель для столбцов
     void setColumnDelimiter(int newDelimiter);
+    // Устанавливает использование кавычек
     void setQuotes(bool state);
 
-signals:
+signals:  // Сигнал нужен для установки типа MIME
     void enableDelimiterChange(bool state);
 };
 

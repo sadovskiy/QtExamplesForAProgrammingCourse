@@ -29,7 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->splitter->setStretchFactor(0, 1);
+    // или
     ui->splitter->setStretchFactor(1, 2);
+
     connect(ui->listWidget, &QListWidget::itemClicked,
             this, &MainWindow::clickedItem);
 }
@@ -55,7 +57,7 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::clickedItem(QListWidgetItem *item)
 {
-    item->setFlags(item->flags () | Qt::ItemIsEditable);
+    item->setFlags(item->flags() | Qt::ItemIsEditable);
 }
 
 void MainWindow::loadFile(const QString &filePathAndName)

@@ -38,13 +38,28 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxMimeTypeCustomTable->addItems(
                 ui->tableWidgetDagAndDropCustom->model()->mimeTypes());
 
+    // Для правильного выстраивания взаимодействия с пользователем
+    // на форме mainwindow.ui отключаем объекты:
+    // comboBoxColumnDelimiterCustomTable,
+    // comboBoxRowDelimiterCustomTable,
+    // checkBoxQuotesMark.
+    // Но если пользователь переведёт comboBoxMimeTypeCustomTable
+    // в вариант "application/x-qabstractitemmodeldatalist", то разблокируем их
+    // через соединение методом connect() сигнала enableDelimiterChange и
+    // лямбдо-функцией.
     connect(ui->tableWidgetDagAndDropCustom, &MyTableWidget::enableDelimiterChange,
             [=](bool state)
     {
+        // Так как есть необходимость переводить компоненты
+        // в включение состояние и обратно в выключенное,
+        // то лучше это сделать через использование переменной state
         ui->comboBoxColumnDelimiterCustomTable->setEnabled(state);
         ui->comboBoxRowDelimiterCustomTable->setEnabled(state);
+        ui->checkBoxQuotesMark->setEnabled(state);
+        // Сбросим текущие значения компонентов на значения по умолчанию
         ui->comboBoxColumnDelimiterCustomTable->setCurrentIndex(0);
         ui->comboBoxRowDelimiterCustomTable->setCurrentIndex(0);
+        ui->checkBoxQuotesMark->setChecked(true);
     });
 
     // Установим связь сигнала выбора пользователем типа MIME со слотом
@@ -52,11 +67,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->comboBoxMimeTypeCustomTable, &QComboBox::currentTextChanged,
             ui->tableWidgetDagAndDropCustom, &MyTableWidget::setMimeType);
 
+    // В случае если пользователь меняет значение в выпадающем списке,
+    // то вызываем методы по изменению текущих разделителей
+    // и использования кавычек.
     connect(ui->comboBoxColumnDelimiterCustomTable, QOverload<int>::of(&QComboBox::currentIndexChanged),
             ui->tableWidgetDagAndDropCustom, &MyTableWidget::setColumnDelimiter);
     connect(ui->comboBoxRowDelimiterCustomTable, QOverload<int>::of(&QComboBox::currentIndexChanged),
             ui->tableWidgetDagAndDropCustom, &MyTableWidget::setRowDelimiter);
-
     connect(ui->checkBoxQuotesMark, &QCheckBox::clicked,
             ui->tableWidgetDagAndDropCustom, &MyTableWidget::setQuotes);
 }

@@ -50,7 +50,7 @@ void MainWindow::on_pushButtonFormWindowA_clicked()
     autoGlobWindow.show();
 }
 
-void MainWindow::setStatusBarMessage(FormWindow::UserData ud)
+void MainWindow::setStatusBarMessage(const FormWindow::UserData ud)
 {
     ui->statusBar->showMessage("User Name: " + ud.userName + \
                                " |Password: " + ud.password,

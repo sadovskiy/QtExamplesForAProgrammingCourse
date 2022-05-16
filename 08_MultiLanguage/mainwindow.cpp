@@ -18,6 +18,7 @@
 
 #include <QFileDialog>
 #include <QLibraryInfo>
+#include <QLabel>
 
 /**
  * Следует отметить, что файл с переводом "*.qm" подхватываемый и загружаемый
@@ -53,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionExit, &QAction::triggered,
             this, &MainWindow::close);
     connect(ui->actionAboutQt, &QAction::triggered,
-            qApp, &MainWindow::aboutQt);
+            qApp, &QApplication::aboutQt);
 
     /**
      * Подключим переменные, которые в будущем будут
@@ -78,10 +79,16 @@ MainWindow::MainWindow(QWidget *parent) :
      * со списком доступных переводов нашего приложения
      */
     createLanguageMenu();
+
+    label = new QLabel(this);
+    label->setObjectName(QString::fromUtf8("label"));
+    label->setGeometry(QRect(10, 10, 100, 100));
+    label->setText(tr("Hello World!"));
 }
 
 MainWindow::~MainWindow()
 {
+    delete label;
     delete ui;
 }
 
@@ -206,9 +213,13 @@ void MainWindow::switchLanguage(QAction *action)
     qtTranslator.load("qt_" + locale + ".qm", QLibraryInfo::location(
                           QLibraryInfo::TranslationsPath));
 
+
+
     /**
      * Взываем "retranslateUi()" для обновления интерфейса приложения
      * используя загруженный из соответствующего файла "qm" язык
      */
     ui->retranslateUi(this);
+
+    label->setText(QCoreApplication::translate("MainWindow", "Hello World!", nullptr));
 }

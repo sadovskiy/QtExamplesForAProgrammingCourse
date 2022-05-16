@@ -30,7 +30,7 @@ public:
 
     // Запуск таймера с количеством циклов "count"
     // и задержками каждого цикла в "ms".
-    void start(int count, int ms);
+    void start(const int count, const int delay);
 
 signals:
     // Создаём сигнал, генерируемый на каждом шаге нашего таймера.

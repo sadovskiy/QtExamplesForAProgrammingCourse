@@ -35,7 +35,7 @@ public:
 
 private slots:
     // Слот, вызываемый на сигнал "step(int value)" класса "Timer".
-    void setValue1(int value);
+    void setValue1(const int value);
 
     void on_pushButtonStart_clicked();
 
