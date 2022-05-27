@@ -22,6 +22,7 @@ namespace Ui {
 class MainWindow;
 }
 
+
 class QListWidgetItem;
 
 class MainWindow : public QMainWindow
@@ -34,15 +35,19 @@ public:
 
 private slots:
     void on_actionOpen_triggered();
-
     void on_actionSave_triggered();
 
+    // Слот обрабатывающий нажатие на переключатель выбора
+    // объекта для загрузки
     void clickedItem(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
 
+    // Методы для работы с файлом
+    // Чтение файла
     void loadFile(const QString &filePathAndName);
+    // Запись в файл
     void saveFile(const QString &filePathAndName);
 };
 

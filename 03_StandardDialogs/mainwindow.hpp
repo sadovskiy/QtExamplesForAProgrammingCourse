@@ -43,47 +43,26 @@ public:
     // Далее перечислены слоты кнопок, вызывающие соответствующие диалоговые окна
 private slots:
     void on_pushButtonGetInt_clicked();
-
     void on_pushButtonGetDouble_clicked();
-
     void on_pushButtonGetItem_clicked();
-
     void on_pushButtonGetText_clicked();
-
     void on_pushButtonGetExistingDirectory_clicked();
-
     void on_pushButtonGetOpenFileName_clicked();
-
     void on_pushButtonGetOpenFileNames_clicked();
-
     void on_pushButtonGetSaveFileName_clicked();
-
     void on_pushButtonErrorShowMessage_clicked();
-
     void on_pushButtonAboutQt_clicked();
-
     void on_pushButtonAbout_clicked();
-
     void on_pushButtonMBoxInformation_clicked();
-
     void on_pushButtonMBoxQuestion_clicked();
-
     void on_pushButtonMBoxWarning_clicked();
-
     void on_pushButtonMBoxCritical_clicked();
-
     void on_pushButtonGetFont_clicked();
-
     void on_pushButtonGetColor_clicked();
-
     void on_pushButtonPrint_clicked();
-
     void on_pushButtonPageSetup_clicked();
-
     void on_pushButtonPrintPreview_clicked();
-
     void printPreviewNeeds(QPrinter *m_printer);
-
     void on_pushButtonProgress_clicked();
 
     void updateProgress();

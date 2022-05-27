@@ -42,24 +42,35 @@
 
 #include "mdichild.h"
 
-MdiChild::MdiChild():
-    isUntitled(true)
+MdiChild::MdiChild(QWidget *parent):
+    QTextEdit(parent)
+  , isUntitled(true)
 {
+    // Удаляем окно из памяти, что бы не было утечек памяти
     setAttribute(Qt::WA_DeleteOnClose);
 }
 
+// Метод создаёт новый пустой файл
 void MdiChild::newFile()
 {
+    // Для нумерации создаваемых файлов, пока им не присвоено имя
     static int sequenceNumber = 1;
 
+    // Ставим метку, что файл без названия
     isUntitled = true;
+    // Создаём имя документа по умолчанию, с использованием счётчика
     curFile = tr("untitled%1.txt").arg(sequenceNumber++);
+    // Включаем добавление символа "*" в заголовок дочернего окна,
+    // в качестве признака редактирования файла
     setWindowTitle(curFile + "[*]") ;
 
+    // Связываем сигнал contentsChanged с слотом documentWasModified
+    // для проставления признака редактирования текста в приложении
     connect(document(), &QTextDocument::contentsChanged,
             this, &MdiChild::documentWasModified);
 }
 
+// Стандартная загрузка файла
 bool MdiChild::loadFile(const QString &fileName)
 {
     QFile file(fileName);
@@ -74,26 +85,35 @@ bool MdiChild::loadFile(const QString &fileName)
 
     QTextStream in(&file);
     QApplication::setOverrideCursor(Qt::WaitCursor);
+    // Загружаем данные в текущее дочернее окно
     setPlainText(in.readAll());
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
 
+    // Поскольку была загрузка, а значит текст изменился и значит надо
+    // выставить признак редактирования
     connect(document(), &QTextDocument::contentsChanged,
             this, &MdiChild::documentWasModified);
 
     return true;
 }
 
+// При сохранении файла надо выяснить есть ли у него название
 bool MdiChild::save()
 {
+    // Проверяем признак именования файла
     if (isUntitled) {
+        // Если у файла нет имени
         return saveAs();
     } else {
+        // Если есть, то используем текущие и сохраняем под ним
         return saveFile(curFile);
     }
 }
 
+// Сохранение файла через открытие диалогового окна сохранения файла,
+// если у него не было имени и пути
 bool MdiChild::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
@@ -102,9 +122,11 @@ bool MdiChild::saveAs()
     if (fileName.isEmpty())
         return false;
 
+    // Путь и имя получили, теперь делаем сохранение файла
     return saveFile(fileName);
 }
 
+// Метод записывает файл из текстового потока
 bool MdiChild::saveFile(const QString &fileName)
 {
     QFile file(fileName);
@@ -118,36 +140,54 @@ bool MdiChild::saveFile(const QString &fileName)
     }
 
     QTextStream out(&file);
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
+    // Скидываем из окна текст в поток файла
     out << toPlainText();
     QApplication::restoreOverrideCursor();
 
+    // Передаём новое имя файла в качестве основного
     setCurrentFile(fileName);
     return true;
 }
 
+// Оставим у файла только его имя. Убираем путь
 QString MdiChild::userFriendlyCurrentFile()
 {
-    return strippedName(curFile);
+    return QFileInfo(curFile).fileName();
 }
 
+// Если дочернее окно закрывается, то надо проверить
+// был ли в нём отредактирован документ, и если да,
+// то предложим пользователю его сохранить
 void MdiChild::closeEvent(QCloseEvent *event)
 {
-    if (maybeSave()) {
+    // Если пользователь нажмёт "Cancel",
+    // то дочернее окно не закроется
+    if (maybeSave())
+        // Окно закрывается
         event->accept();
-    } else {
+    else
+        // Окно продолжит работать
         event->ignore();
-    }
 }
 
+// В классе QTextEdit, за работу с форматированными данными используется
+// класс QTextDocument, у которого есть механизм определять,
+// было ли редактирование текста или нет. Данный метод узнаёт это и
+// передаёт эти сведенья текущему дочернему окну
 void MdiChild::documentWasModified()
 {
     setWindowModified(document()->isModified());
 }
 
+// Проверка, надо ли сохранять файл
 bool MdiChild::maybeSave()
 {
+    // Если документ был изменён
     if (document()->isModified()) {
+        // То предложим пользователю его сохранить
+        // или выйти без сохранения
         QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this,
                                    tr("MDI"),
@@ -164,16 +204,18 @@ bool MdiChild::maybeSave()
     return true;
 }
 
+// Метод делает новый отредактированный файл текущим
+// и даёт ему имя
 void MdiChild::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
+    // Теперь у файла есть название
     isUntitled = false;
+    // Теперь документ сохранён под новым именем и не является
+    // изменённым
     document()->setModified(false);
     setWindowModified(false);
+    // Используя новое имя файла надо обновить признак редактирования
+    // в заголовке дочернего окна
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
-}
-
-QString MdiChild::strippedName(const QString &fullFileName)
-{
-    return QFileInfo(fullFileName).fileName();
 }

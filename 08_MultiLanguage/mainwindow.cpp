@@ -39,6 +39,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
   , ui(new Ui::MainWindow)
+  , languageActionGroup(nullptr)
+  , label(new QLabel(this))
 {
     ui->setupUi(this);
 
@@ -80,7 +82,9 @@ MainWindow::MainWindow(QWidget *parent) :
      */
     createLanguageMenu();
 
-    label = new QLabel(this);
+    // Тут не рекомендуется создавать динамический объект,
+    // так как потом наблюдаются проблемы с меню
+//    label = new QLabel(this);
     label->setObjectName(QString::fromUtf8("label"));
     label->setGeometry(QRect(10, 10, 100, 100));
     label->setText(tr("Hello World!"));
@@ -96,6 +100,7 @@ void MainWindow::open()
 {
     /// Создаём диалоговое окно в динамической памяти
     QFileDialog *fdialog = new QFileDialog(this);
+    fdialog->setAttribute(Qt::WA_DeleteOnClose);
 
     /**
      * Запрашиваем имя выбранного файла,
@@ -221,5 +226,7 @@ void MainWindow::switchLanguage(QAction *action)
      */
     ui->retranslateUi(this);
 
-    label->setText(QCoreApplication::translate("MainWindow", "Hello World!", nullptr));
+    // Для элемента созданного динамический, но не на форме,
+    // надо заново задать текст, который сработает при переключении языка
+    label->setText(tr("Hello World!"));
 }

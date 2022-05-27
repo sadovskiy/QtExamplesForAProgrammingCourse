@@ -13,12 +13,6 @@
  *
  */
 
-// В данном примере показано использование подхода сигнал и слот в Qt.
-// Этот подход реализует шаблон "Наблюдатель".
-// При вводе текста в верхнее поле, он попадёт в метку с права посл нажатия кнопки.
-// Если в главном меню поставить галочку, то текст начнёт отображаться в метке прям во время ввода.
-// Движение слайдера перемещает прогрессбар.
-//
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
@@ -60,15 +54,15 @@ MainWindow::MainWindow(QWidget *parent) :
     // Есть вариант сигнала для int и QString.
     // Решение проблемы существует в двух вариантах
     // 1. Используя синтаксис C++ до 14 версии
-    connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged),
-            this,        &MainWindow::setValue);
+    // connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged),
+    //        this,        &MainWindow::setValue);
 
     // 2. Используя синтаксис C++ после 14 версии
-//    connect(ui->spinBox, qOverload<int>(&QSpinBox::valueChanged),
-//            this,        &MainWindow::setValue);
+    connect(ui->spinBox, qOverload<int>(&QSpinBox::valueChanged),
+            this,        &MainWindow::setValue);
 
     // Для переключения версии языка C++ откройте файл настройки проекта (.pro)
-    // и там измените параметр CONFIG += c++11
+    // и там измените параметр CONFIG += c++14 на CONFIG += c++11
 
     // Подробнее можно посмотреть по следующим ссылкам:
     // 1. https://doc.qt.io/qt-5/signalsandslots-syntaxes.html
@@ -109,7 +103,7 @@ void MainWindow::setTextInLabel()
     //    ui->label->setText(str);
 
     // Или более короткий вариант того же самого
-    // без использования временной переменной.
+    // без использования временной переменной str.
     ui->label->setText(ui->lineEdit->text());
 }
 

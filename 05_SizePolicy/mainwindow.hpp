@@ -33,14 +33,21 @@ public:
     ~MainWindow();
 
 private slots:
+    // Слот реализует реакцию на нажатие по любому
+    // пункту меню входящему в группу sizePolicyActionGroup
     void setSizePolicy(QAction *action);
 
+    // Слоты сработают на нажатие по переключателю
+    // типа QRadioButton
     void on_radioButtonList1_clicked(bool checked);
     void on_radioButtonList2_clicked(bool checked);
+    // Слот сработает на изменение значений объекта spinBox
     void on_spinBox_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
+
+    // Создаём группу из пунктов меню типа QAction
     QActionGroup *sizePolicyActionGroup;
 };
 

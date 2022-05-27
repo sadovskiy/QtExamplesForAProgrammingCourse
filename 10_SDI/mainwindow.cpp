@@ -1,12 +1,12 @@
 ﻿/*
  *
- * Copyright (C) 2019 Dept. of Information Systems, Technology and Automation in Construction (ISTAC),
+ * Copyright (C) 2016 Dept. of Information Systems, Technology and Automation in Construction (ISTAC),
  * Moscow State University of Civil Engineering (MSUCE or MGSU)
  *
  * Written by Sadovskiy B. S.
  *
  *
- * Права на программу (С) 2019 Кафедра информационных систем, технологий и автоматизации в строительстве (ИСТАС),
+ * Права на программу (С) 2016 Кафедра информационных систем, технологий и автоматизации в строительстве (ИСТАС),
  * Московский Государственный строительный университет (МГСУ)
  *
  * Написана Садовским Б. С.
@@ -22,6 +22,11 @@
 #include <QTextStream>
 #include <QLibraryInfo>
 #include <QCloseEvent>
+
+
+// Тут комментарии практический отсутствуют, так как большинство решений
+// уже было рассмотрено в примерах ранее и этот пример практический полностью
+// повторяет пример с MDI
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -67,6 +72,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::newFile()
 {
+    // Единственная разница это создание нового окна
+    // с динамической продолжительностью хранения
     MainWindow *mainWindow = new MainWindow;
     mainWindow->show();
 }

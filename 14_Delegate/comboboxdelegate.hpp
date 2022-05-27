@@ -13,7 +13,7 @@
  *
  */
 
-// Подробно работа с делегатами (Контроллерами) описана в документации,
+// Подробно работа с делегатами описана в документации,
 // например тут: https://doc.qt.io/qt-5/modelview.html
 // раздел 3.4 Delegates.
 
@@ -32,7 +32,7 @@ class ComboBoxDelegate : public QStyledItemDelegate
 public:
     explicit ComboBoxDelegate(QWidget *parent = nullptr);
 
-    // Метод, создающий виджет-редактор с отбъектом типа QComboBox
+    // Метод, создающий виджет-редактор с объектом типа QComboBox
     QWidget *createEditor(QWidget *parent,
                           const QStyleOptionViewItem &option,
                           const QModelIndex &index) const override;

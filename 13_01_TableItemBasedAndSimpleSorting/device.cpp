@@ -1,9 +1,24 @@
+/*
+ *
+ * Copyright (C) 2021 Dept. of Information Systems, Technology and Automation in Construction (ISTAC),
+ * Moscow State University of Civil Engineering (MSUCE or MGSU)
+ *
+ * Written by Sadovskiy B. S.
+ *
+ *
+ * Права на программу (С) 2021 Кафедра информационных систем, технологий и автоматизации в строительстве (ИСТАС),
+ * Московский Государственный строительный университет (МГСУ)
+ *
+ * Написана Садовским Б. С.
+ *
+ */
+
 #include "device.hpp"
 
 Device::Device():
     mId(0)
-  , mModel()
   , mManufacturer()
+  , mModel()
 {
 
 }
@@ -12,16 +27,16 @@ Device::Device(const int lId,
                const std::string &lManufacturer,
                const std::string &lModel):
     mId(lId)
-  , mModel(lModel)
   , mManufacturer(lManufacturer)
+  , mModel(lModel)
 {
 
 }
 
 Device::Device(const Device &other):
     mId(other.mId)
-  , mModel(other.mModel)
   , mManufacturer(other.mManufacturer)
+  , mModel(other.mModel)
 {
 
 }
@@ -33,6 +48,9 @@ Device::~Device()
 
 Device &Device::operator=(const Device &other)
 {
+    // Хоть метод и стандартный напомню,
+    // что перед копированием полей надо проверить,
+    // не присваивает ли метод сам себя
     if (this == &other) return *this;
 
     mId = other.mId;

@@ -17,6 +17,7 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include <QPointer>
 
 #include "formwindow.hpp"
 
@@ -33,21 +34,36 @@ public:
     ~MainWindow();
 
 private slots:
+    // Реализация слотов реализующих отработку нажатия на соответствующие кнопки
     void on_buttonDialogWindowA_clicked();
-
-    void on_pushButtonFormWindowA_clicked();
-
-    void setStatusBarMessage(const FormWindow::UserData ud);
-
+    void on_buttonFormWindowA_clicked();
     void on_buttonNewWindowD_clicked();
-
     void on_buttonExistingWindowD_clicked();
+    void on_buttonNewWindowP_clicked();
+    void on_buttonExistingWindowP_clicked();
+    void on_buttonDeleteP_clicked();
+    void on_buttonDeleteD_clicked();
+
+    // Слот реализующий размещение текста в нижней части окна
+    void setStatusBarMessage(const FormWindow::UserData &ud);
 
 private:
     Ui::MainWindow *ui;
+    // Окно с автоматической продолжительностью хранения,
+    // но за счёт объявления в классе будет существовать пока не будет удалён
+    // объект этого класса с доступом из любого метода этого класса.
     FormWindow autoGlobWindow;
-    FormWindow *dynamicWndow;
+    // Вариант создания окна с динамической продолжительностью хранения
+    FormWindow *dynamicWndowD;
+    // Другой вариант создания динамического окна через класс QPointer
+    QPointer<FormWindow> dynamicWndowP;
 
+    // Переменные подсчёта созданных окон. Помогают вести учёт,
+    // сколько окон было создано
+    int windowCountD;
+    int windowCountP;
+
+    // Набор данные о пользователе (логин и пароль)
     FormWindow::UserData mUserData;
 };
 

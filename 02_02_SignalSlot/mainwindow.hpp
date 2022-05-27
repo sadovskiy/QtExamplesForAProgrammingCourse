@@ -35,13 +35,13 @@ public:
 
 private slots:
     // Слот, вызываемый на сигнал "step(int value)" класса "Timer".
-    void setValue1(const int value);
+    void setValue(const int value);
 
     void on_pushButtonStart_clicked();
 
 private:
     Ui::MainWindow *ui;
-    Timer *myTimer; // Cоздадим указатель типа Timer.
+    Timer *myTimer; // Создадим указатель типа Timer.
 };
 
 #endif // MAINWINDOW_HPP

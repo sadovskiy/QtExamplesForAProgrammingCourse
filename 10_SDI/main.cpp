@@ -1,12 +1,12 @@
 ﻿/*
  *
- * Copyright (C) 2019 Dept. of Information Systems, Technology and Automation in Construction (ISTAC),
+ * Copyright (C) 2016 Dept. of Information Systems, Technology and Automation in Construction (ISTAC),
  * Moscow State University of Civil Engineering (MSUCE or MGSU)
  *
  * Written by Sadovskiy B. S.
  *
  *
- * Права на программу (С) 2019 Кафедра информационных систем, технологий и автоматизации в строительстве (ИСТАС),
+ * Права на программу (С) 2016 Кафедра информационных систем, технологий и автоматизации в строительстве (ИСТАС),
  * Московский Государственный строительный университет (МГСУ)
  *
  * Написана Садовским Б. С.
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     /**
      * Для создания окон больше одного,
-     * их надо создавать в динамической памяти
+     * их надо создавать с динамической продолжительностю хранения
      */
     MainWindow *mainWindow = new MainWindow;
     mainWindow->show();

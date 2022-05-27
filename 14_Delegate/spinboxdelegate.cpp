@@ -13,7 +13,7 @@
  *
  */
 
-// Подробно работа с делегатами (Контроллерами) описана в документации,
+// Подробно работа с делегатами описана в документации,
 // например тут: https://doc.qt.io/qt-5/modelview.html
 // раздел 3.4 Delegates.
 
@@ -113,7 +113,7 @@ void SpinBoxDelegate::updateEditorGeometry(QWidget *editor,
 // Если же достаточно стандартного вида ячейки, то можно не создавать
 // данный метод вообще.
 // В нашем случае для примера нарисуем в ячейке индикатор
-// выполнения задачи progres bar
+// выполнения progres bar
 void SpinBoxDelegate::paint(QPainter *painter,
                             const QStyleOptionViewItem &option,
                             const QModelIndex &index) const

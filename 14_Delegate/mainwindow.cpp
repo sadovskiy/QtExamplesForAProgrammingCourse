@@ -13,7 +13,7 @@
  *
  */
 
-// Подробно работа с делегатами (Контроллерами) описана в документации,
+// Подробно работа с делегатами описана в документации,
 // например тут: https://doc.qt.io/qt-5/modelview.html
 // раздел 3.4 Delegates.
 
@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Создать делегат (форма обработки данных)
     // по обработке ввода данных в ячейку, использующий QSpinBox
-    SpinBoxDelegate *spDelegate = new SpinBoxDelegate(this);
+    SpinBoxDelegate *spDelegate = new SpinBoxDelegate(ui->tableWidget);
 
     // Установить для первого столбца в качестве ячейки ввода
     // нашу ячейку delegate с элементом ввода QSpinBox
@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->tableWidget->setItemDelegateForColumn(0, new SpinBoxDelegate(this));
 
     // То же самое для элемента QCheckBox и сразу запишем в один оператор
-    ui->tableWidget->setItemDelegateForColumn(1, new CheckBoxDelegate(this));
+    ui->tableWidget->setItemDelegateForColumn(1, new CheckBoxDelegate(ui->tableWidget));
 
     // После добавления можно выровнять толщину столбцов
     // по значению самого широкого
@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 
     // Пример делегата с элементом QComboBox
-    ComboBoxDelegate *cbDelegate = new ComboBoxDelegate(this);
+    ComboBoxDelegate *cbDelegate = new ComboBoxDelegate(ui->tableWidget);
 
     // Задаём список вариантов для выбора их пользователем в выпадающем списке
     cbDelegate->setData(QStringList({ "Hello", "my", "world!" }));

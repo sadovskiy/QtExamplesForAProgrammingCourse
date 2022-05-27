@@ -128,7 +128,9 @@ QMimeData *MyTableWidget::mimeData(const QList<QTableWidgetItem *> items) const
 
     // Так как под разные типы данных MIME используются разные способы
     // подготовки к передаче данных, то сделаем проверку на тип
-    // и в зависимости от входящих значений, будет разный разбор
+    // и в зависимости от входящих значений, будет разный разбор.
+    // Типы "text/plain" и "text/csv", представляют из себя одно и тоже,
+    // по этому разбираются одним алгоритмом
     if (hasFormat("text/plain") || hasFormat("text/csv") ) {
         QString result;
 
@@ -193,7 +195,9 @@ QMimeData *MyTableWidget::mimeData(const QList<QTableWidgetItem *> items) const
         return mimeData;
     }
 
+    // Для внутриннего типа Qt алгорит разбора находится в родительском классе
     if (hasFormat("application/x-qabstractitemmodeldatalist"))
+        // По этому просто передаём ему данные
         return QTableWidget::mimeData(items);
 
     return nullptr;

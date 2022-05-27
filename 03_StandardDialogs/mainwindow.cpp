@@ -83,8 +83,10 @@ MainWindow::MainWindow(QWidget *parent) :
     /*
      * Для того, чтобы окно "progressDialog" самопроизвольно не запускалось,
      * запускаем таймер с нулевым интервалом между сигналами "timeout()".
+     * Возможно, это был баг в Qt, так как сейчас такого эффекта нет.
+     *
      */
-    timer->start(0);
+    timer->start(0); // или timer->stop();
 }
 
 MainWindow::~MainWindow()
@@ -115,7 +117,7 @@ void MainWindow::on_pushButtonGetInt_clicked()
 
     // Проверяем, нажал ли пользователь кнопку "OK".
     if (ok)
-        // Вывод в сответствующую метку значения
+        // Вывод в соответствующую метку значения
         ui->labelGetInt->setText(QString::number(iValue));
     // или
     //    ui->labelGetInt->setText(QString("%1").arg(iValue));
@@ -126,7 +128,7 @@ void MainWindow::on_pushButtonGetInt_clicked()
 void MainWindow::on_pushButtonGetDouble_clicked()
 {
     bool ok;
-
+    // То же самое как в методе выше
     double dValue = QInputDialog::getDouble(this,
                                             tr("QInputDialog::getDouble()"),
                                             tr("Double value:"),
@@ -147,7 +149,7 @@ void MainWindow::on_pushButtonGetItem_clicked()
     items << tr("Spring") << tr("Summer") << tr("Fall") << tr("Winter");
 
     bool ok;
-
+    // То же самое как через метод выше, а отличия прокомментированы
     QString item = QInputDialog::getItem(this,
                                          tr("QInputDialog::getItem()"),
                                          tr("Season:"),
@@ -166,7 +168,7 @@ void MainWindow::on_pushButtonGetItem_clicked()
 void MainWindow::on_pushButtonGetText_clicked()
 {
     bool ok;
-
+    // То же самое как через два метода выше, а отличия прокомментированы
     QString text = QInputDialog::getText(this,
                                          tr("QInputDialog::getText()"),
                                          tr("Name:"),
@@ -210,15 +212,15 @@ void MainWindow::on_pushButtonGetOpenFileName_clicked()
                                          tr("QFileDialog::getOpenFileName()"),
                                          QDir::homePath(),
                                          /*
-                                                                               * Фильтр для файлов
-                                                                               * All Files (*), где слова "All Files"
-                                                                               * увидит пользователь,
-                                                                               * а "*" будет применино к каталогу
-                                                                               * "*" - показывать все файлы
-                                                                               * или
-                                                                               * "*.txt" - показывать только текстовые файлы.
-                                                                               * ";;" - резделитель фильтров.
-                                                                               */
+                                          * Фильтр для файлов
+                                          * All Files (*), где слова "All Files"
+                                          * увидит пользователь,
+                                          * а "*" будет применено к каталогу
+                                          * "*" - показывать все файлы
+                                          * или
+                                          * "*.txt" - показывать только текстовые файлы.
+                                          * ";;" - разделитель фильтров.
+                                          */
                                          tr("All Files (*);;Text Files (*.txt *.log)"));
 
 
@@ -387,7 +389,7 @@ void MainWindow::on_pushButtonGetFont_clicked()
     if (ok) {
         // Отобразить шрифт, который выбрал пользователь и его параметры.
         ui->labelGetFont->setText(font.key());
-        ui->labelGetFont->setFont(font); // Применить выбраный шрифт к метке.
+        ui->labelGetFont->setFont(font); // Применить выбранный шрифт к метке.
     }
 }
 
@@ -417,7 +419,7 @@ void MainWindow::on_pushButtonPrint_clicked()
     // В нашем случае для примера это будет Html.
     QString html = QString("<h1>%1</h1>").arg(ui->lineEditPrint->text());
 
-    textDoc->setHtml(html); // Записываем Html код в контейнер "textDoc".
+    textDoc->setHtml(html); // Записываем "HTML" код в контейнер "textDoc".
 
     // Если пользователь нажал кнопку "Печать".
     if (printDialog.exec() == QDialog::Accepted) {

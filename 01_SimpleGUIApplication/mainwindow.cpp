@@ -13,10 +13,6 @@
  *
  */
 
-// В данном примере показано приложение на Qt,
-// с главным окном и элементами, расположенными на нём.
-// Пара метка-кнопка создаётся статический из файла "mainwindow.ui",
-// а другая делается динамический с помощью операции new
 #include "mainwindow.hpp"
 
 /*
@@ -62,9 +58,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(pushButton, &QPushButton::clicked,
             this, &MainWindow::pushButtonClicked);
 
-    // или старый вариант
-    connect(pushButton, SIGNAL(clicked()),
-            this, SLOT(pushButtonClicked()));
+    // устаревший вариант привязки
+    //connect(pushButton, SIGNAL(clicked()),
+    //        this, SLOT(pushButtonClicked()));
 
 
     /*

@@ -21,32 +21,36 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     sizePolicyActionGroup(new QActionGroup(this))
 {
+    // Следует помнить, все обращения к объектам на форме через указатель ui
+    // должны быть после вызова этого метода
     ui->setupUi(this);
 
+    // У каждого пункта меню есть специальное поле данных.
+    // Туда можно прятать различные значения.
+    // Нам удобно сложить туда идентификаторы соответствующих им политик
     ui->actionFixed->setData(QSizePolicy::Fixed);
-    sizePolicyActionGroup->addAction(ui->actionFixed);
-
     ui->actionMinimum->setData(QSizePolicy::Minimum);
-    sizePolicyActionGroup->addAction(ui->actionMinimum);
-
     ui->actionMaximum->setData(QSizePolicy::Maximum);
-    sizePolicyActionGroup->addAction(ui->actionMaximum);
-
     ui->actionPreferred->setData(QSizePolicy::Preferred);
-    sizePolicyActionGroup->addAction(ui->actionPreferred);
-
     ui->actionExpanding->setData(QSizePolicy::Expanding);
-    sizePolicyActionGroup->addAction(ui->actionExpanding);
-
     ui->actionMinimumExpanding->setData(QSizePolicy::MinimumExpanding);
-    sizePolicyActionGroup->addAction(ui->actionMinimumExpanding);
-
     ui->actionIgnored->setData(QSizePolicy::Ignored);
+
+    // Добавим пункты меню в общую группу
+    sizePolicyActionGroup->addAction(ui->actionFixed);
+    sizePolicyActionGroup->addAction(ui->actionMinimum);
+    sizePolicyActionGroup->addAction(ui->actionMaximum);
+    sizePolicyActionGroup->addAction(ui->actionPreferred);
+    sizePolicyActionGroup->addAction(ui->actionExpanding);
+    sizePolicyActionGroup->addAction(ui->actionMinimumExpanding);
     sizePolicyActionGroup->addAction(ui->actionIgnored);
 
+    // Подсоединим к сигналу triggered группы sizePolicyActionGroup
+    // слот setSizePolicy
     connect(sizePolicyActionGroup, &QActionGroup::triggered,
             this, &MainWindow::setSizePolicy);
 
+    // Определим выбор пользователя по умолчанию, на момент запуска
     switch (ui->listWidget1->sizePolicy().verticalPolicy()) {
     case QSizePolicy::Fixed:
         ui->actionFixed->setChecked(true);
@@ -70,21 +74,29 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->actionIgnored->setChecked(true);
         break;
     }
-    //  или
+    //  или тоже самое но короче
 //    if (ui->listWidget1->sizePolicy().verticalPolicy() ==
 //            QSizePolicy::Fixed)
 //        ui->actionFixed->setChecked(true);
+    // Само значение по умолчанию, проставлено в форме окна MainWindow
+    // через дизайнер Qt
 }
 
 MainWindow::~MainWindow()
 {
+    // Удаляем группу, когда окно будет закрываться
     delete sizePolicyActionGroup;
     delete ui;
 }
 
+// Данный метод при срабатывании получает указатель на пункт меню
+// по которому было нажато пользователем
 void MainWindow::setSizePolicy(QAction *action)
 {
+    // Проверяем, в каком положении находится переключатель
+    // Если он установлен на radioButtonList1,
     if (ui->radioButtonList1->isChecked())
+        // то выясняем какой пункт меню был выбран пользователем
         switch (action->data().toInt()) {
         case QSizePolicy::Fixed:
             ui->listWidget1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -108,7 +120,9 @@ void MainWindow::setSizePolicy(QAction *action)
             ui->listWidget1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
             break;
         }
+    // Аналогично действию выше
     if (ui->radioButtonList2->isChecked())
+
         switch (action->data().toInt()) {
         case QSizePolicy::Fixed:
             ui->listWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -132,14 +146,21 @@ void MainWindow::setSizePolicy(QAction *action)
             ui->listWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
             break;
         }
-    //  или
+    // или более коротки вариант
 //    ui->listWidget1->setSizePolicy(QSizePolicy::Fixed,
 //                                   (QSizePolicy::Policy)action->data().toInt());
 }
 
+// Слот обработки нажатия пользователя по переключателю radioButtonList1
 void MainWindow::on_radioButtonList1_clicked(bool checked)
 {
+    // Если было нажатие на этот переключатель,
     if (checked) {
+        // то выясняем какая политика действует в элементе listWidget1
+        // в данный момент и отмечаем соответствующий пункт меню.
+        // Это нужно, что бы при переключении между
+        // radioButtonList1 и radioButtonList2, пункты меню политик по вертикали
+        // выставлялись в соответствии с их фактическими значениями
         switch (ui->listWidget1->sizePolicy().verticalPolicy()) {
         case QSizePolicy::Fixed:
             ui->actionFixed->setChecked(true);
@@ -163,12 +184,15 @@ void MainWindow::on_radioButtonList1_clicked(bool checked)
             ui->actionIgnored->setChecked(true);
             break;
         }
+        // Передаём текущую пропорцию между объектами listWidget1 и listWidget2
+        // полю ввода spinBox
         ui->spinBox->setValue(ui->verticalLayoutMainWindow->stretch(1));
     }
 }
 
 void MainWindow::on_radioButtonList2_clicked(bool checked)
 {
+    // Тут всё аналогично предыдущему методу
     if (checked){
         switch (ui->listWidget2->sizePolicy().verticalPolicy()) {
         case QSizePolicy::Fixed:
@@ -197,11 +221,21 @@ void MainWindow::on_radioButtonList2_clicked(bool checked)
     }
 }
 
+// Метод срабатывающий на изменение значений в поле ввода spinBox
 void MainWindow::on_spinBox_valueChanged(int arg1)
 {
+    // Получаем через формальный параметр arg1 значение, введённое
+    // пользователем и после определения в каком положении находится
+    // переключатель типа QRadioButton, выставляем значение
     if (ui->radioButtonList1->isChecked())
+        // пропорции занимаемой области объектом listWidget1
         ui->verticalLayoutMainWindow->setStretch(1, arg1);
+    // Первый аргумент в методе setStretch(1, arg1) - это
+    // порядковый номер объекта listWidget1 на форме MainWindow
 
     if (ui->radioButtonList2->isChecked())
+        // и listWidget2
         ui->verticalLayoutMainWindow->setStretch(2, arg1);
+    // Первый аргумент в методе setStretch(2, arg1) - это
+    // порядковый номер объекта listWidget2 на форме MainWindow
 }

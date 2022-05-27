@@ -22,9 +22,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-# Для работы с новым синтаксисом перегруженных сигналов и/или слотов
-# надо включить стандарт c++14
-CONFIG += c++11
+# Для работы со старым синтаксисом перегруженных сигналов и/или слотов
+# надо включить стандарт c++11
+CONFIG += c++14
 
 SOURCES += \
         main.cpp \

@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Поскольку надо получать и выводить сообщения об ошибках,
     // то подключаем созданный в файлах textsyntaxhighlighter.hpp/cpp
-    // сигнал с текстом ошибки к слоту вывода сообщения statusbar
+    // сигнал, с текстом ошибки, к слоту вывода сообщения statusbar,
     // расположенным в низу окна через строку состояния
     connect(highlighter, &TextSyntaxHighlighter::error,
             ui->statusbar, &QStatusBar::showMessage);
@@ -142,7 +142,7 @@ void MainWindow::on_lineEditValidate_textChanged(const QString &arg1)
 // Метод ищет в тексте plainTextEdit по шаблону из lineEditSearchPattern
 void MainWindow::on_pushButtonFind_clicked()
 {
-    // Задаём шаблон для поиска с подсветкой наёденного фрагмента
+    // Задаём шаблон для поиска с подсветкой найденного фрагмента
     highlighter->setPattern(ui->lineEditSearchPattern->text());
 
     // Обновляем подсветку
@@ -184,7 +184,7 @@ void MainWindow::on_pushButtonReplace_clicked()
 
     // Однако у метода setPlainText() есть недостаток.
     // Вместе со записью нового текста он сбрасывает
-    // буферы отменить/повторить, а также формат текста.
+    // буфер отменить/повторить, а также формат текста.
     // Если есть необходимость в последующем отменить замену,
     // например через сочетание клавиш "Ctrl+Z",
     // то можно сделать замену через выделение всего текста

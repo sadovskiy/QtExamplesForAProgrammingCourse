@@ -7,16 +7,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>253</width>
-    <height>209</height>
+    <width>671</width>
+    <height>285</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QGroupBox" name="groupBoxAuto">
       <property name="title">
        <string>Auto Window</string>
@@ -39,7 +39,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButtonFormWindowA">
+        <widget class="QPushButton" name="buttonFormWindowA">
          <property name="text">
           <string>QWidget</string>
          </property>
@@ -48,10 +48,10 @@
       </layout>
      </widget>
     </item>
-    <item>
-     <widget class="QGroupBox" name="groupBoxDynamic">
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="groupBoxDynamicDestroyed">
       <property name="title">
-       <string>Dynamic Window</string>
+       <string>Dynamic Window via signal Destroyed</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -62,16 +62,102 @@
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutD">
+         <item>
+          <widget class="QLabel" name="labelWindowCountD">
+           <property name="text">
+            <string>Window count: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="spinBoxWindowCountD"/>
+         </item>
+        </layout>
+       </item>
+       <item>
         <widget class="QPushButton" name="buttonExistingWindowD">
          <property name="text">
-          <string>Еxisting QWidget</string>
+          <string>Show Еxisting QWidget</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBoxModal">
+        <widget class="QCheckBox" name="checkBoxDeleteOnCloseD">
+         <property name="text">
+          <string>Delete on Close</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxModalD">
          <property name="text">
           <string>Modal</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonDeleteD">
+         <property name="text">
+          <string>Delete Existing QWidget</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QGroupBox" name="groupBoxQPointer">
+      <property name="title">
+       <string>Dynamic Window via QPointer</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="buttonNewWindowP">
+         <property name="text">
+          <string>New QWidget</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutP">
+         <item>
+          <widget class="QLabel" name="labelWindowCountP">
+           <property name="text">
+            <string>Window count: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="spinBoxWindowCountP"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonExistingWindowP">
+         <property name="text">
+          <string>Show Еxisting QWidget</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxDeleteOnCloseP">
+         <property name="text">
+          <string>Delete on Close</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxModalP">
+         <property name="text">
+          <string>Modal</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonDeleteP">
+         <property name="text">
+          <string>Delete Existing QWidget</string>
          </property>
         </widget>
        </item>
@@ -85,8 +171,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>253</width>
-     <height>30</height>
+     <width>671</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
