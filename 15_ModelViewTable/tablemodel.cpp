@@ -211,8 +211,9 @@ Qt::ItemFlags TableModel::flags(const QModelIndex &index) const
         // следующие стандартные возможности:
         // ItemIsEnabled - включить текущую ячейку;
         // ItemIsSelectable - текущая ячейка может быть выделяемой;
-        // ItemIsEditable - текущая ячейка может быть редактируемой
-        return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+        // ItemIsEditable - текущая ячейка может быть редактируемой;
+        // ItemIsDragEnabled - разрешить перемещать данные через захват мышью
+        return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsDragEnabled;
     else
         // Если индекс некорректный, то отправляем нулевой флаг
         return Qt::NoItemFlags;

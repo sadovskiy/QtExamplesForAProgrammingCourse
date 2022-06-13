@@ -137,6 +137,9 @@ void MainWindow::loadFile(const QString &filePathAndName)
 
     // Выводим имя открытого файла в метку
     ui->label->setText(QFileInfo(filePathAndName).fileName());
+
+    // Можно закрыть файл
+    file.close();
 }
 
 void MainWindow::saveFile(const QString &filePathAndName)
@@ -176,4 +179,7 @@ void MainWindow::saveFile(const QString &filePathAndName)
     QApplication::restoreOverrideCursor();
 
     ui->label->setText(QFileInfo(filePathAndName).fileName());
+
+    // Можно закрыть файл
+    file.close();
 }
